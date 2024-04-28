@@ -141,4 +141,58 @@ public class OneDayDb {
         }
         return o;
     }
+
+    public static OneDay getOneDayByDate(Connection conn, String taskDate) {
+        OneDay o = new OneDay();
+        String sql = "SELECT * FROM OneDayTasks WHERE TaskDate=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(6, taskDate);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                o.Name = rs.getString("Name");
+                o.Desc = rs.getString("Desc");
+                o.TimeRestricted = rs.getBoolean("TimeRestricted");
+                o.Urgency = rs.getString("Urgency");
+                o.Repeated = rs.getString("Repeated");
+                o.TaskDate = rs.getString("TaskDate");
+                o.FullDay = rs.getBoolean("FullDay");
+            } else {
+                o.Name = "Not Found";
+                o.Desc = "Not Found";
+                o.TimeRestricted = false;
+                o.Urgency = "Not Found";
+                o.Repeated = "Not Found";
+                o.TaskDate = taskDate;
+                o.FullDay = false;
+            }
+        } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        }
+        return o;
+    }
+
+    public static ArrayList<OneDay> getAllOneDayTasksByDate(Connection conn, String taskDate) {
+        ArrayList<OneDay> oneDayTasksDate = new ArrayList<OneDay>();
+        String sql = "SELECT * FROM OneDayTasks WHERE TaskDate=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(6, taskDate);
+            ResultSet rs = pst.executeQuery(sql);
+
+            while (rs.next()) {
+                OneDay o = new OneDay(rs.getString("Name"),
+                    rs.getString("Desc"), rs.getBoolean("TimeRestricted"),
+                    rs.getString("Urgency"), rs.getString("Repeated"), 
+                    rs.getString("TaskDate"), rs.getBoolean("FullDay"));
+                oneDayTasksDate.add(o);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return oneDayTasksDate;
+    }
 }

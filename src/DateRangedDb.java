@@ -141,4 +141,50 @@ public class DateRangedDb {
         }
         return d;
     }
+
+    public static ArrayList<DateRanged> getAllDateRangedTasksByStart(Connection conn, String startDate) {
+        ArrayList<DateRanged> dateRangedTasksStartDate = new ArrayList<DateRanged>();
+        String sql = "SELECT * FROM DateRangedTasks WHERE StartDate=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(6, startDate);
+            ResultSet rs = pst.executeQuery(sql);
+
+            while (rs.next()) {
+                DateRanged d = new DateRanged(rs.getString("Name"),
+                    rs.getString("Desc"), rs.getBoolean("TimeRestricted"),
+                    rs.getString("Urgency"), rs.getString("Repeated"), 
+                    rs.getString("StartDate"), rs.getString("EndDate"));
+                dateRangedTasksStartDate.add(d);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return dateRangedTasksStartDate;
+    }
+
+    public static ArrayList<DateRanged> getAllDateRangedTasksByEnd(Connection conn, String endDate) {
+        ArrayList<DateRanged> dateRangedTasksEndDate = new ArrayList<DateRanged>();
+        String sql = "SELECT * FROM DateRangedTasks WHERE EndDate=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(7, endDate);
+            ResultSet rs = pst.executeQuery(sql);
+
+            while (rs.next()) {
+                DateRanged d = new DateRanged(rs.getString("Name"),
+                    rs.getString("Desc"), rs.getBoolean("TimeRestricted"),
+                    rs.getString("Urgency"), rs.getString("Repeated"), 
+                    rs.getString("StartDate"), rs.getString("EndDate"));
+                dateRangedTasksEndDate.add(d);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return dateRangedTasksEndDate;
+    }
 }

@@ -147,4 +147,28 @@ public class InPersonDb {
         }
         return i;
     }
+
+    public static ArrayList<InPerson> getAllInPersonTasksByDate(Connection conn, String taskDate) {
+        ArrayList<InPerson> inPersonTasksDate = new ArrayList<InPerson>();
+        String sql = "SELECT * FROM InPersonTasks WHERE TaskDate=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(6, taskDate);
+            ResultSet rs = pst.executeQuery(sql);
+
+            while (rs.next()) {
+                InPerson i = new InPerson(rs.getString("Name"),
+                    rs.getString("Desc"), rs.getBoolean("TimeRestricted"),
+                    rs.getString("Urgency"), rs.getString("Repeated"), 
+                    rs.getString("TaskDate"), rs.getBoolean("FullDay"),
+                    rs.getString("Location"));
+                inPersonTasksDate.add(i);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return inPersonTasksDate;
+    }
 }
