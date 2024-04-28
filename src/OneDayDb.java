@@ -22,10 +22,13 @@ public class OneDayDb {
         // SQL statement for creating a new table
         String sql =
             "CREATE TABLE IF NOT EXISTS OneDayTasks (\n"
-            + " ID integer PRIMARY KEY\n"
-            + " ,FirstName varchar(20)\n"
-            + " ,LastName varchar(40)\n"
-            + " ,Age integer);";
+            + " Name varchar(20)\n"
+            + " ,Desc varchar(60)\n"
+            + " ,TimeRestricted varchar(10)\n"
+            + " ,Urgency varchar(10)\n"
+            + " ,Repeated varchar(10)\n"
+            + " ,TaskDate date/time\n"
+            + " ,FullDay varchar(10);";
 
         System.out.println(sql);
 
@@ -37,5 +40,99 @@ public class OneDayDb {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    public static void addOneDay(Connection conn, OneDay o) {
+        String sql =
+            "INSERT INTO OneDayTasks(Name, Desc, TimeRestricted, Urgency, Repeated, TaskDate, FullDay) VALUES(?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, o.Name);
+            pst.setString(2, o.Desc);
+            pst.setBoolean(3, o.TimeRestricted);
+            pst.setString(4, o.Urgency);
+            pst.setString(5, o.Repeated);
+            pst.setDate(6, o.TaskDate);
+            pst.setBoolean(7, o.FullDay);
+            pst.executeUpdate();
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void updateOneDay(Connection conn, OneDay o) {
+        String sql =
+            "UPDATE OneDayTasks SET Desc=?, TimeRestricted=?, Urgency=?, Repeated=?, TaskDate=?, FullDay=? WHERE Name=?";
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, o.Name);
+            pst.setString(2, o.Desc);
+            pst.setBoolean(3, o.TimeRestricted);
+            pst.setString(4, o.Urgency);
+            pst.setString(5, o.Repeated);
+            pst.setDate(6, o.TaskDate);
+            pst.setBoolean(7, o.FullDay);
+            pst.executeUpdate();
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void deleteOneDay(Connection conn, String name) {
+        String sql = "DELETE from OneDayTasks WHERE Name=?";
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, name);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static ArrayList<OneDay> getAllOneDayTasks(Connection conn) {
+        ArrayList<OneDay> oneDayTasks = new ArrayList<OneDay>();
+        String sql = "SELECT * FROM OneDayTasks";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                OneDay o = new OneDay(rs.getString("Name"),
+                    rs.getString("Desc"), rs.getBoolean("TimeRestricted"),
+                    rs.getString("Urgency"), rs.getString("Repeated"), 
+                    rs.getDate("TaskDate"), rs.getBoolean("FullDay"));
+                oneDayTasks.add(o);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return oneDayTasks;
+    }
+
+    public static OneDay getOneDay(Connection conn, String name) {
+        OneDay o = new OneDay();
+        String sql = "SELECT * FROM People WHERE ID=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                p.ID = rs.getInt("ID");
+                p.FirstName = rs.getString("FirstName");
+                p.LastName = rs.getString("LastName");
+                p.Age = rs.getInt("Age");
+            } else {
+                p.ID = id;
+                p.FirstName = "Not";
+                p.LastName = "Found";
+                p.Age = 999;
+            }
+        } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        }
+        return p;
     }
 }

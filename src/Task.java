@@ -18,7 +18,6 @@ public class Task {
 
     public Task(String name, String desc, boolean timeRestricted, 
         String urgency, String repeated) { 
-
             Name = name;
             Desc = desc;
             TimeRestricted = timeRestricted;
