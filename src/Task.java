@@ -1,6 +1,6 @@
 /*******************************************************************
 * Name: Abi Nakhle
-* Date: 4/24/24
+* Date: 4/28/24
 * Assignment: Course Project
 *
 * This class represents a Task object, which is "ultimate" super 
@@ -9,12 +9,13 @@
 * Repeated properties as well as getters and setters for those 
 * properties. The constructor takes parameters to set all properties.
 */
+
 public class Task {
-    private String Name;
-    private String Desc;
-    private boolean TimeRestricted;
-    private String Urgency;
-    private String Repeated;
+    public String Name;
+    public String Desc;
+    public boolean TimeRestricted;
+    public String Urgency;
+    public String Repeated;
 
     public Task(String name, String desc, boolean timeRestricted, 
         String urgency, String repeated) { 
@@ -23,6 +24,8 @@ public class Task {
             TimeRestricted = timeRestricted;
             Urgency = urgency;
             Repeated = repeated;
+    }
+    public Task() {
     }
 
     public String getName() {

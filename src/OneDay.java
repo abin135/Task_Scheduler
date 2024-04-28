@@ -1,6 +1,6 @@
 /*******************************************************************
 * Name: Abi Nakhle
-* Date: 4/24/24
+* Date: 4/28/24
 * Assignment: Course Project
 *
 * This class represents a OneDay object, which extends the Task 
@@ -10,15 +10,13 @@
 * calls the super class toString method to provide the formatted 
 * data.
 */
-import java.sql.Date;
-import java.time.LocalDate;
 
 public class OneDay extends Task{
-    private LocalDate TaskDate;
-    private boolean FullDay;
+    public String TaskDate;
+    public boolean FullDay;
 
     public OneDay(String name, String desc, boolean timeRestricted, 
-        String urgency, String repeated, LocalDate taskDate, 
+        String urgency, String repeated, String taskDate, 
         boolean fullDay) {
             
             super(name, desc, timeRestricted, urgency, repeated);
@@ -26,10 +24,13 @@ public class OneDay extends Task{
             FullDay = fullDay;
     }
 
-    public LocalDate getTaskDate() {
+    public OneDay() {
+    }
+
+    public String getTaskDate() {
         return TaskDate;
     }
-    public void setTaskDate(LocalDate taskDate) {
+    public void setTaskDate(String taskDate) {
         TaskDate = taskDate;
     }
 
@@ -40,26 +41,19 @@ public class OneDay extends Task{
         FullDay = fullDay;
     }
 
-    public int daysUntil(LocalDate taskDate) {
-        LocalDate today = java.time.LocalDate.now();
-        taskDate - today;
-    } 
-
     @Override
     public String toString() {
         if (FullDay == true) {
-            return String.format("%n%s%n%s%s%n%s%s%n%s%s%s%n", 
+            return String.format("%n%s%n%s%s%n%s%s%n", 
                 super.toString(),
                 "Task Date: ", TaskDate,
-                "Task is the whole day.",
-                "There are ", daysUntil(TaskDate), " days until the task date."
+                "Task is the whole day."
             );
         } else {
-            return String.format("%n%s%n%s%s%n%s%s%n%s%s%s%n", 
+            return String.format("%n%s%n%s%s%n%s%s%n", 
                 super.toString(),
                 "Task Date: ", TaskDate,
-                "Task is not the whole day.",
-                "There are ", daysUntil(TaskDate), " days until the task date."
+                "Task is not the whole day."
             );
         }
     }

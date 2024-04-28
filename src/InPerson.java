@@ -1,6 +1,6 @@
 /*******************************************************************
 * Name: Abi Nakhle
-* Date: 4/24/24
+* Date: 4/28/24
 * Assignment: Course Project
 *
 * This class represents an InPerson object, which extends the 
@@ -9,17 +9,18 @@
 * class properties. The toString method is also overridden and 
 * calls the super class’s method.
 */
-import java.time.LocalDate;
 
 public class InPerson extends OneDay {
-    private String Location;
+    public String Location;
 
     public InPerson(String name, String desc, boolean timeRestricted, 
-        String urgency, String repeated, LocalDate taskDate, boolean fullDay, 
+        String urgency, String repeated, String taskDate, boolean fullDay, 
         String location) {
 
             super(name, desc, timeRestricted, urgency, repeated, taskDate, fullDay);
             Location = location;
+    }
+    public InPerson() {
     }
 
     public String getLocation() {

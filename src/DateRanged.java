@@ -1,6 +1,6 @@
 /*******************************************************************
 * Name: Abi Nakhle
-* Date: 4/24/24
+* Date: 4/28/24
 * Assignment: Course Project
 *
 * This class represents a DateRanged object, which extends the Task 
@@ -9,37 +9,34 @@
 * class properties. The toString is overridden and calls the super 
 * class toString method to provide the formatted data.
 */
-import java.time.LocalDate;
 
 public class DateRanged extends Task {
-    private LocalDate StartDate;
-    private LocalDate EndDate;
+    public String StartDate;
+    public String EndDate;
 
     public DateRanged(String name, String desc, boolean timeRestricted, 
-        String urgency, String repeated, LocalDate startDate, 
-        LocalDate endDate) {
+        String urgency, String repeated, String startDate, 
+        String endDate) {
 
             super(name, desc, timeRestricted, urgency, repeated);
             StartDate = startDate;
             EndDate = endDate;
     }
+    public DateRanged() {
+    }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return StartDate;
     }
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         StartDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return EndDate;
     }
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(String endDate) {
         EndDate = endDate;
-    }
-
-    public int daysLeft(LocalDate StartDate, LocalDate EndDate) {
-        StartDate - EndDate;
     }
 
     @Override
@@ -47,7 +44,6 @@ public class DateRanged extends Task {
         return String.format("%n%s%n%s%s%n%s%s%n", 
             super.toString(),
             "Start Date: ", StartDate,
-            "End Date: ", EndDate,
-            "There are ", daysLeft(StartDate, EndDate), " days left for the task.");
+            "End Date: ", EndDate);
     }
 }
