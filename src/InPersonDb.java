@@ -6,8 +6,8 @@
 * Class to handle all interactions with the InPersonTasks table in the
 * database, including creating the table if it doesn't exist and all
 * CRUD (Create, Read Update, Delete) operations on the table. 
-* Interactions are all done using standard SQL syntax then executed by 
-* the SQLite JDBC library.
+* Searching by date is also an operation. Interactions are all done 
+* using standard SQL syntax then executed by the SQLite JDBC library.
 */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
